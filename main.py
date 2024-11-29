@@ -60,7 +60,7 @@ def process_images(images: List[Image.Image]) -> List[np.array]:
     return result
 
 def main():
-    SCALING_FACTOR = 2
+    SCALING_FACTOR = 4
     OUTPUT_DIR = "./output"
 
     print_setup()
@@ -68,8 +68,9 @@ def main():
     datasets = get_datasets()
 
     models = {
-       "esrgan": "https://tfhub.dev/captain-pool/esrgan-tf2/1",
-       "naive": None  # For naive upscaling
+       "naive": None,
+       "esrgan": "https://kaggle.com/models/kaggle/esrgan-tf2/frameworks/TensorFlow2/variations/esrgan-tf2/versions/1",
+       # Find more models!
     }
 
     for model_name, model_url in models.items():
@@ -82,6 +83,7 @@ def main():
             model = None  # For naive upscaling
 
         for dataset_name, dataset in datasets.items():
+            print(f"evaluating {dataset_name}...")
             dataset_output_dir = os.path.join(model_output_dir, dataset_name)
             os.makedirs(dataset_output_dir, exist_ok=True)
 
